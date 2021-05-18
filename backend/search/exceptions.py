@@ -1,0 +1,2 @@
+class NotEnoughParamsException(Exception):
+    pass

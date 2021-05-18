@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from exceptions import NotEnoughParamsException
+
 
 class SearchProducts(APIView):
 
@@ -11,7 +13,7 @@ class SearchProducts(APIView):
 
         try:
             params = self.__get_params(request.query_params)
-        except ValueError as e:
+        except NotEnoughParamsException as e:
             print(f'Failed to get params: {e}')
             return HttpResponseBadRequest()
 
@@ -30,6 +32,6 @@ class SearchProducts(APIView):
             params['phrase'] = request_params['phrase']
             params['website'] = request_params['website']
         except KeyError:
-            raise ValueError('Not enough params')
+            raise NotEnoughParamsException('Not enough params')
         params['page'] = request_params['page'] if 'page' in request_params else 0
         return params
