@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -25,8 +24,7 @@ SECRET_KEY = '5hcqgrwu$_9zh$!v6=6wy%s40hp6p34othy9b0uc*7*ih=1hhb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1',]
-
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', ]
 
 # Application definition
 
@@ -41,6 +39,7 @@ INSTALLED_APPS = [
     # project apps
     'users',
     'entities',
+    'search.apps.SearchConfig',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +84,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -104,10 +102,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Custom authentication
 AUTH_USER_MODEL = 'users.CustomUser'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -121,7 +117,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
