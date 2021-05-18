@@ -4,13 +4,14 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from exceptions import NotEnoughParamsException
+from config.settings import SEARCH_MODULE_URL
+from search.exceptions import NotEnoughParamsException
 
 
 class SearchProducts(APIView):
 
     def get(self, request):
-
+       
         try:
             params = self.__get_params(request.query_params)
         except NotEnoughParamsException as e:
@@ -18,7 +19,7 @@ class SearchProducts(APIView):
             return HttpResponseBadRequest()
 
         try:
-            response = requests.get('http://localhost:8001/search', params=params)
+            response = requests.get(SEARCH_MODULE_URL + '/search', params=params)
             response.raise_for_status()
         except requests.exceptions.RequestException:
             return HttpResponseBadRequest()
