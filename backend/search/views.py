@@ -23,7 +23,8 @@ class SearchProducts(APIView):
 
         return Response(response.json(), status=status.HTTP_200_OK)
 
-    def __get_params(self, request_params):
+    @staticmethod
+    def __get_params(request_params):
         params = {}
         try:
             params['phrase'] = request_params['phrase']
