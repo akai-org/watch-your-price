@@ -1,3 +1,4 @@
+import requests
 from django.http import HttpResponseBadRequest
 from rest_framework import status
 from rest_framework.response import Response
@@ -8,9 +9,9 @@ class SearchProducts(APIView):
 
     def get(self, request):
         try:
-            phrase = request.query_params['phrase']
-            website = request.query_params['website']
-        except KeyError:
+            response = requests.get('http://localhost:8001/search', params=request.query_params)
+            response.raise_for_status()
+        except requests.exceptions.RequestException:
             return HttpResponseBadRequest()
-        page = request.query_params['page'] if 'page' in request.query_params else 0
-        return Response(request.query_params, status=status.HTTP_200_OK)
+
+        return Response(response.json(), status=status.HTTP_200_OK)
