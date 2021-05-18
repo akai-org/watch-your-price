@@ -9,14 +9,11 @@ class SearchProducts(APIView):
 
     def get(self, request):
 
-        params = {}
-
         try:
-            params['phrase'] = request.query_params['phrase']
-            params['website'] = request.query_params['website']
-        except KeyError:
+            params = self.__get_params(request.query_params)
+        except ValueError as e:
+            print(f'Failed to get params: {e}')
             return HttpResponseBadRequest()
-        params['page'] = request.query_params['page'] if 'page' in request.query_params else 0
 
         try:
             response = requests.get('http://localhost:8001/search', params=params)
@@ -25,3 +22,13 @@ class SearchProducts(APIView):
             return HttpResponseBadRequest()
 
         return Response(response.json(), status=status.HTTP_200_OK)
+
+    def __get_params(self, request_params):
+        params = {}
+        try:
+            params['phrase'] = request_params['phrase']
+            params['website'] = request_params['website']
+        except KeyError:
+            raise ValueError('Not enough params')
+        params['page'] = request_params['page'] if 'page' in request_params else 0
+        return params
